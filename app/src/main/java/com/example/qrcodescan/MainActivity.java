@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     // data를 json으로 변환
                     JSONObject obj = new JSONObject(result.getContents());
+                    Log.i(TAG, "qrcode data: " + obj);
                     QRCodeCheck(obj);
 
                     qrScan.setPrompt("Scanning...");
@@ -85,14 +86,15 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 boolean success = false;
                 try {
-                    success = response.getBoolean("success");
-                    if (success) {
+                    Log.i(TAG, "check data: " + response);
+//                    success = response.getBoolean("success");
+                    if (response != null) {
                         Toast.makeText(MainActivity.this, "출석하셨습니다.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(MainActivity.this, "네트워크 연결 오류", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, error.getMessage());
                 Log.i(TAG, "Volley Error in receiv");
             }
         });
