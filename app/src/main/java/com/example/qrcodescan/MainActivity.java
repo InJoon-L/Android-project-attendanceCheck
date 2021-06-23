@@ -14,7 +14,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.qrcodescan.databinding.ActivityMainBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 qrScan.setPrompt("Scanning...");
+                qrScan.setCameraId(0);
+//                qrScan.setCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT);
 //                qrScan.setOrientationLocked(false);
                 qrScan.initiateScan();
             }
@@ -101,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, "네트워크 연결 오류", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, error.getMessage());
                 Log.i(TAG, "Volley Error in receiv");
             }
